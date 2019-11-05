@@ -16,10 +16,8 @@ def add_task():
                                         'content': '',
                                         'user_id': _user,
                                         'done': False})
-        inserted_task = find_task(task_id)
-        resp = jsonify(inserted_task)
-        resp.status_code = 200
-        return resp
+        inserted_task = dumps(find_task(task_id))
+        return Response(updated_task, status=201, mimetype='application/json')
     else:
         return not_found()
 
@@ -63,10 +61,8 @@ def update_task():
                                            'user_id': _user
                                            }
                                   })
-        updated_task = find_task(_id)
-        resp = jsonify(updated_task)
-        resp.status_code = 200
-        return resp
+        updated_task = dumps(find_task(_id))
+        return Response(updated_task, status=200, mimetype='application/json')
     else:
         return bad_request()
 

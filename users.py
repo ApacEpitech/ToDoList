@@ -19,7 +19,7 @@ def add_user():
                                         'pwd': _hashed_password,
                                         'banned': False,
                                         'administrator': False})
-        inserted_user = find_user(user_id)
+        inserted_user = dumps(find_user(user_id))
         return Response(inserted_user, status=201, mimetype='application/json')
 
     else:
@@ -74,8 +74,8 @@ def update_user():
                                            'administrator': _administrator
                                            }
                                   })
-        updated_user = find_user(_id)
-        return Response(updated_user, status=201, mimetype='application/json')
+        updated_user = dumps(find_user(_id))
+        return Response(updated_user, status=200, mimetype='application/json')
     else:
         return not_found()
 
