@@ -1,7 +1,7 @@
 from app import app, mongo
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from werkzeug import generate_password_hash, check_password_hash
 
 
@@ -20,9 +20,8 @@ def add_user():
                                         'banned': False,
                                         'administrator': False})
         inserted_user = find_user(user_id)
-        resp = jsonify(inserted_user)
-        resp.status_code = 200
-        return resp
+        return Response(inserted_user, status=201, mimetype='application/json')
+
     else:
         return not_found()
 
@@ -76,9 +75,7 @@ def update_user():
                                            }
                                   })
         updated_user = find_user(_id)
-        resp = jsonify(updated_user)
-        resp.status_code = 200
-        return resp
+        return Response(updated_user, status=201, mimetype='application/json')
     else:
         return not_found()
 
