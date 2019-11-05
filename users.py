@@ -37,7 +37,7 @@ def users():
 def user(id):
     user_found = find_user(id)
     resp = dumps(user_found)
-    return resp
+    return Response(resp, status=200, mimetype='application/json')
 
 
 @app.route('/user/connect', methods=['GET'])
@@ -49,12 +49,12 @@ def user_connect():
     user_found = mongo.db.user.find_one({'mail': _mail, 'password': _hashed_password})
     if user_found:
         resp = dumps(user_found)
-        return resp
+        return Response(resp, status=200, mimetype='application/json')
     else:
         return unauthorized()
 
 
-@app.route('/update', methods=['PUT'])
+@app.route('/user/update', methods=['PUT'])
 def update_user():
     _json = request.json
     _id = _json['_id']
@@ -84,8 +84,7 @@ def update_user():
 def delete_user(id):
     mongo.db.user.delete_one({'_id': ObjectId(id)})
     resp = ''
-    resp.status_code = 200
-    return resp
+    return Response(resp, status=200, mimetype='application/json')
 
 
 @app.errorhandler(404)
@@ -95,9 +94,8 @@ def not_found():
         'message': 'Not Found: ' + request.url,
     }
     resp = jsonify(message)
-    resp.status_code = 404
 
-    return resp
+    return Response(resp, status=404, mimetype='application/json')
 
 
 @app.errorhandler(403)
@@ -107,9 +105,8 @@ def unauthorized():
         'message': 'Unauthorized: ' + request.url,
     }
     resp = jsonify(message)
-    resp.status_code = 403
 
-    return resp
+    return Response(resp, status=403, mimetype='application/json')
 
 
 def find_user(user_id):

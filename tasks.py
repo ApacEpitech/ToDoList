@@ -43,7 +43,7 @@ def tasks_for_user(user_id):
     return resp
 
 
-@app.route('/update', methods=['PUT'])
+@app.route('/task/update', methods=['PUT'])
 def update_task():
     _json = request.json
     _id = _json['_id']
@@ -71,8 +71,7 @@ def update_task():
 def delete_task(id):
     mongo.db.task.delete_one({'_id': ObjectId(id)})
     resp = ''
-    resp.status_code = 200
-    return resp
+    return Response(resp, status=200, mimetype='application/json')
 
 
 @app.errorhandler(404)
@@ -82,9 +81,7 @@ def not_found():
         'message': 'Not Found: ' + request.url,
     }
     resp = jsonify(message)
-    resp.status_code = 404
-
-    return resp
+    return Response(resp, status=404, mimetype='application/json')
 
 
 @app.errorhandler(401)
@@ -94,9 +91,7 @@ def bad_request():
         'message': 'Bad request: ' + request.url,
     }
     resp = jsonify(message)
-    resp.status_code = 401
-
-    return resp
+    return Response(resp, status=401, mimetype='application/json')
 
 
 def find_task(task_id):
