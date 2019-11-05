@@ -80,7 +80,7 @@ def update_user():
         return not_found()
 
 
-@app.route('/users/<id>', methods=['DELETE'])
+@app.route('/user/<id>', methods=['DELETE'])
 def delete_user(id):
     mongo.db.user.delete_one({'_id': ObjectId(id)})
     resp = ''

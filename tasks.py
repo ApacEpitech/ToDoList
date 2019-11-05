@@ -67,7 +67,7 @@ def update_task():
         return bad_request()
 
 
-@app.route('/delete/<id>', methods=['DELETE'])
+@app.route('/task/<id>', methods=['DELETE'])
 def delete_task(id):
     mongo.db.task.delete_one({'_id': ObjectId(id)})
     resp = ''
