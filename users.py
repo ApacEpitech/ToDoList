@@ -33,14 +33,14 @@ def users():
     return resp
 
 
-@app.route('/user/<id>', methods=['GET'])
+@app.route('/users/<id>', methods=['GET'])
 def user(id):
     user_found = find_user(id)
     resp = dumps(user_found)
     return Response(resp, status=200, mimetype='application/json')
 
 
-@app.route('/user/connect', methods=['GET'])
+@app.route('/users/connect', methods=['GET'])
 def user_connect():
     _json = request.json
     _mail = _json['mail']
@@ -54,7 +54,7 @@ def user_connect():
         return unauthorized()
 
 
-@app.route('/user/update', methods=['PUT'])
+@app.route('/users', methods=['PUT'])
 def update_user():
     _json = request.json
     _id = _json['_id']
@@ -80,7 +80,7 @@ def update_user():
         return not_found()
 
 
-@app.route('/user/<id>', methods=['DELETE'])
+@app.route('/users/<id>', methods=['DELETE'])
 def delete_user(id):
     mongo.db.user.delete_one({'_id': ObjectId(id)})
     resp = ''

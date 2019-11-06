@@ -7,7 +7,7 @@ from flask import jsonify, request
 @app.route('/tasks', methods=['POST'])
 def add_task():
     _json = request.json
-    _title = _json['mail']
+    _title = _json['title']
     _user = _json['user_id']
     # validate the received values
     if _title:
@@ -29,7 +29,7 @@ def tasks():
     return resp
 
 
-@app.route('/task/<id>', methods=['GET'])
+@app.route('/tasks/<id>', methods=['GET'])
 def task(id):
     task_found = find_task(id)
     resp = dumps(task_found)
@@ -43,7 +43,7 @@ def tasks_for_user(user_id):
     return resp
 
 
-@app.route('/task/update', methods=['PUT'])
+@app.route('/tasks', methods=['PUT'])
 def update_task():
     _json = request.json
     _id = _json['_id']
@@ -67,7 +67,7 @@ def update_task():
         return bad_request()
 
 
-@app.route('/task/<id>', methods=['DELETE'])
+@app.route('/tasks/<id>', methods=['DELETE'])
 def delete_task(id):
     mongo.db.task.delete_one({'_id': ObjectId(id)})
     resp = ''
