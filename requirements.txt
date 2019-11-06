@@ -3,3 +3,4 @@ flask_pymongo
 pymongo
 bson
 werkzeug
+flask-cors
