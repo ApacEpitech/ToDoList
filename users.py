@@ -46,8 +46,10 @@ def user_connect():
     _mail = _json['mail']
     _password = _json['password']
     _hashed_password = generate_password_hash(_password)
-    user_found = mongo.db.user.find_one({'mail': _mail, 'password': _hashed_password})
-    if user_found:
+    #user_found = mongo.db.user.find_one({'email': _mail, 'password': _hashed_password})
+    user_found = mongo.db.user.find_one({'email': _mail})
+    print(user_found)
+    if user_found and check_password_hash(user_found['pwd'], _password):
         resp = dumps(user_found)
         return Response(resp, status=200, mimetype='application/json')
     else:
@@ -93,7 +95,7 @@ def not_found():
         'status': 404,
         'message': 'Not Found: ' + request.url,
     }
-    resp = jsonify(message)
+    resp = dumps(message)
 
     return Response(resp, status=404, mimetype='application/json')
 
@@ -104,7 +106,7 @@ def unauthorized():
         'status': 403,
         'message': 'Unauthorized: ' + request.url,
     }
-    resp = jsonify(message)
+    resp = dumps(message)
 
     return Response(resp, status=403, mimetype='application/json')
 

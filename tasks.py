@@ -1,7 +1,7 @@
 from app import app, mongo
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from flask import jsonify, request
+from flask import jsonify, request, Response
 
 
 @app.route('/tasks', methods=['POST'])
@@ -17,7 +17,7 @@ def add_task():
                                         'user_id': _user,
                                         'done': False})
         inserted_task = dumps(find_task(task_id))
-        return Response(updated_task, status=201, mimetype='application/json')
+        return Response(inserted_task, status=201, mimetype='application/json')
     else:
         return not_found()
 
@@ -36,7 +36,7 @@ def task(id):
     return resp
 
 
-@app.route('/tasks/<user_id>', methods=['GET'])
+@app.route('/tasks/users/<user_id>', methods=['GET'])
 def tasks_for_user(user_id):
     tasks_found = mongo.db.task.find({'user_id': ObjectId(user_id)})
     resp = dumps(tasks_found)
@@ -47,8 +47,8 @@ def tasks_for_user(user_id):
 def update_task():
     _json = request.json
     _id = _json['_id']
-    _title = _json['email']
-    _content = _json['pwd']
+    _title = _json['title']
+    _content = _json['content']
     _user = _json['user_id']
     _done = _json['done']
     # validate the received values
@@ -80,7 +80,7 @@ def not_found():
         'status': 404,
         'message': 'Not Found: ' + request.url,
     }
-    resp = jsonify(message)
+    resp = dumps(message)
     return Response(resp, status=404, mimetype='application/json')
 
 
@@ -90,7 +90,7 @@ def bad_request():
         'status': 401,
         'message': 'Bad request: ' + request.url,
     }
-    resp = jsonify(message)
+    resp = dumps(message)
     return Response(resp, status=401, mimetype='application/json')
 
 
