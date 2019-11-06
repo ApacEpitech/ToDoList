@@ -33,14 +33,14 @@ def tasks():
 def task(id):
     task_found = find_task(id)
     resp = dumps(task_found)
-    return resp
+    return Response(resp, status=200, mimetype='application/json')
 
 
 @app.route('/tasks/users/<user_id>', methods=['GET'])
 def tasks_for_user(user_id):
     tasks_found = mongo.db.task.find({'user_id': ObjectId(user_id)})
     resp = dumps(tasks_found)
-    return resp
+    return Response(resp, status=200, mimetype='application/json')
 
 
 @app.route('/tasks', methods=['PUT'])
