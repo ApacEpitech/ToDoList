@@ -1,7 +1,7 @@
 from app import app, mongo
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from flask import jsonify, request, Response
+from flask import request, Response
 from werkzeug import generate_password_hash, check_password_hash
 
 
@@ -40,15 +40,13 @@ def user(id):
     return Response(resp, status=200, mimetype='application/json')
 
 
-@app.route('/users/connect', methods=['GET'])
+@app.route('/users/connect', methods=['POST'])
 def user_connect():
     _json = request.json
     _mail = _json['mail']
     _password = _json['password']
     _hashed_password = generate_password_hash(_password)
-    #user_found = mongo.db.user.find_one({'email': _mail, 'password': _hashed_password})
     user_found = mongo.db.user.find_one({'email': _mail})
-    print(user_found)
     if user_found and check_password_hash(user_found['pwd'], _password):
         resp = dumps(user_found)
         return Response(resp, status=200, mimetype='application/json')
@@ -65,17 +63,25 @@ def update_user():
     _banned = _json['banned']
     _administrator = _json['administrator']
     # validate the received values
-    if _email and _password and _id:
-        # do not save password as a plain text
-        _hashed_password = generate_password_hash(_password)
-        # save edits
-        mongo.db.user.update_one({'_id': ObjectId(_id['$oid']) if '$oid' in _id else ObjectId(_id)},
-                                 {'$set': {'email': _email,
-                                           'pwd': _hashed_password,
-                                           'banned': _banned,
-                                           'administrator': _administrator
-                                           }
-                                  })
+    if _email and _id:
+        if _password and _password != '':
+            # do not save password as a plain text
+            _hashed_password = generate_password_hash(_password)
+            # save edits
+            mongo.db.user.update_one({'_id': ObjectId(_id['$oid']) if '$oid' in _id else ObjectId(_id)},
+                                     {'$set': {'email': _email,
+                                               'pwd': _hashed_password,
+                                               'banned': _banned,
+                                               'administrator': _administrator
+                                               }
+                                      })
+        else:
+            mongo.db.user.update_one({'_id': ObjectId(_id['$oid']) if '$oid' in _id else ObjectId(_id)},
+                                     {'$set': {'email': _email,
+                                               'banned': _banned,
+                                               'administrator': _administrator
+                                               }
+                                      })
         updated_user = dumps(find_user(_id))
         return Response(updated_user, status=200, mimetype='application/json')
     else:
@@ -96,7 +102,7 @@ def not_found():
         'message': 'Not Found: ' + request.url,
     }
     resp = dumps(message)
-
+    print("oui")
     return Response(resp, status=404, mimetype='application/json')
 
 
