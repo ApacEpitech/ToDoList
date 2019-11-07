@@ -33,9 +33,9 @@ def users():
     return resp
 
 
-@app.route('/users/<id>', methods=['GET'])
-def user(id):
-    user_found = find_user(id)
+@app.route('/users/<user_id>', methods=['GET'])
+def user(user_id):
+    user_found = find_user(user_id)
     resp = dumps(user_found)
     return Response(resp, status=200, mimetype='application/json')
 
@@ -102,7 +102,6 @@ def not_found():
         'message': 'Not Found: ' + request.url,
     }
     resp = dumps(message)
-    print("oui")
     return Response(resp, status=404, mimetype='application/json')
 
 
