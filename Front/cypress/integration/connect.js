@@ -23,6 +23,6 @@ context('Actions', () => {
     cy.on('window:alert', () => {
         expect(true).to.be.false;
     });
-    cy.url().should('include', '/homeAdmin?show=All')
+    cy.url().should('include', '/homeAdmin?show=All');
   });
 });
