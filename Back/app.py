@@ -6,7 +6,7 @@ from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = ""
-app.config["MONGO_URI"] = "mongodb://mongodb:27017/todolist"
+app.config["MONGO_URI"] = "mongodb://www.holy-driver.tools:27017/todolist"
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 try:
