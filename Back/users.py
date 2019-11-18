@@ -25,7 +25,6 @@ def add_user():
     else:
         return not_found()
 
-
 @app.route('/users', methods=['GET'])
 def users():
     all_users = mongo.db.user.find()
@@ -52,6 +51,7 @@ def user_connect():
         return Response(resp, status=200, mimetype='application/json')
     else:
         return unauthorized()
+
 
 
 @app.route('/users', methods=['PUT'])
