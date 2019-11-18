@@ -100,7 +100,7 @@ describe('Array', function() {
                 let mail = "test2@google.com";
                 let pwd = "123654";
                 chai.request('http://localhost:5000')
-                    .get('/users/connect')
+                    .post('/users/connect')
                     .send({mail: mail, password: pwd})
                     .end((err, res) => {
                         expect(res).to.have.status(200);
@@ -118,7 +118,7 @@ describe('Array', function() {
                 let mail = "test2@google.com";
                 let pwd = "fakePwd";
                 chai.request('http://localhost:5000')
-                    .get('/users/connect')
+                    .post('/users/connect')
                     .send({mail: mail, password: pwd})
                     .end((err, res) => {
                         expect(res).to.have.status(403);
