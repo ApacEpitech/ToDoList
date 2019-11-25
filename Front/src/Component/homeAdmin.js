@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import queryString from 'query-string';
 import TextArea from "antd/es/input/TextArea";
 const { Option } = Select;
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 export default class HomeAdmin extends React.Component{
 
@@ -313,7 +313,7 @@ export default class HomeAdmin extends React.Component{
                                 {
                                     this.state.tasks.map(task =>
                                         <Col  span={8} >
-                                            <Card bordered={true} style={{width: 300, marginBottom: '2%'}} title={task.title}  extra={<Icon type="close" style={{float: "right", fontSize: "20px", cursor: "pointer"}} onClick={this.onDeleteTask} id={task._id.$oid}/> }>
+                                            <Card bordered={true} style={{width: 300, marginBottom: '2%'}} title={task.title} className={"Task"} extra={<Icon type="close" style={{float: "right", fontSize: "20px", cursor: "pointer"}} onClick={this.onDeleteTask} id={task._id.$oid}/> }>
                                                 <p>{task.content}</p>
                                                 <Icon type="edit" style={{float: "left", fontSize: "20px", cursor: "pointer"}} onClick={this.showModalEditTaskModal} id={task._id.$oid}/>
                                                 <Checkbox onChange={this.onChangeStateDone} id={"Done"}
@@ -330,9 +330,9 @@ export default class HomeAdmin extends React.Component{
                             visible={this.stateNewTaskModal.visible}
                             onOk={this.handleOkNewTaskModal}
                             onCancel={this.handleCancelNewTaskModal}
-                            okText={'Create'}
-                        >
-                            <Form >
+                            okText={'Create'}>
+                            <Form                             id="createTask"
+>
                                 <Form.Item>
                                     <Input
                                         prefix={<Icon type="project" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -342,8 +342,7 @@ export default class HomeAdmin extends React.Component{
                                 <Form.Item>
                                     <Select
                                         style={{ width: 120, marginRight: 10 }}
-                                        onSelect={(value, event) => this.onChangeUserSelect(value, event)}
-                                    >
+                                        onSelect={(value, event) => this.onChangeUserSelect(value, event)}>
                                         {
                                             this.state.allUsers.map(val => (
                                                 <Option key={val._id.$oid} value={val._id.$oid}>

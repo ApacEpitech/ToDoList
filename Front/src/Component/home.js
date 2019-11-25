@@ -299,8 +299,7 @@ export default class Home extends React.Component{
                         visible={this.stateNewTaskModal.visible}
                         onOk={this.handleOkNewTaskModal}
                         onCancel={this.handleCancelNewTaskModal}
-                        okText={'Create'}
-                    >
+                        okText={'Create'}>
                         <Form >
                             <Form.Item>
                                 <Input
