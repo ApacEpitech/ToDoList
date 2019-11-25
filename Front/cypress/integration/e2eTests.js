@@ -2,7 +2,7 @@ context('Connect', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/login')
   });
-  it('.fail to connect', () => {
+  it('Fails to connect', () => {
     cy.get('#normal_login_username')
       .type('fake@email.com').should('have.value', 'fake@email.com');
 
@@ -13,7 +13,7 @@ context('Connect', () => {
         expect(str).to.equal(`Email Or Password Incorrect`)
     });
   });
-  it('.success to connect', () => {
+  it('Success to connect', () => {
     cy.get('#normal_login_username')
       .type('admin@admin.com');
     cy.get('#normal_login_password')
@@ -38,7 +38,7 @@ context('Manage tasks Administrator', () => {
     cy.contains('Log in').click();
   });
 
-  it('.creates task', () => {
+  it('creates task', () => {
     cy.get(".Task").its("length").then(numTasks => {
       cy.get('.anticon-plus').click();
       cy.get('#createTask').should("be.visible");
@@ -47,6 +47,25 @@ context('Manage tasks Administrator', () => {
       cy.contains("admin").click();
       cy.get("button").get("span").contains("Create").click({force:true});
       cy.get(".Task").its("length").should("equal", numTasks + 1);
+    });
+  });
+
+  it('creates task for user', () => {
+    cy.get(".Task").its("length").then(numTasks => {
+      cy.get('.anticon-plus').click();
+      cy.get('#createTask').should("be.visible");
+      cy.get("#NewTitleTask").type("This is a task");
+      cy.get(".ant-select-selection").click();
+      cy.contains("random").click();
+      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get(".Task").its("length").should("equal", numTasks + 1);
+    });
+  });
+
+  it('delete task', () => {
+    cy.get(".Task").its("length").then(numTasks => {
+      cy.get('.anticon-close').first().click({force: true}).wait(1000);
+      cy.get(".Task").its("length").should("equal", numTasks - 1);
     });
   });
 });
