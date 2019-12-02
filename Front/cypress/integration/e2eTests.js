@@ -27,6 +27,28 @@ context('Connect', () => {
 });
 
 // TODO CREATE USER random.mail@google.com random
+context('Manage users Administrator', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('#normal_login_username')
+        .type('admin@admin.com');
+    cy.get('#normal_login_password')
+        .type('admin');
+    cy.contains('Log in').click();
+  });
+
+  it('.creates user', () => {
+    cy.visit('http://localhost:3000/users');
+    cy.get(".User").its("length").then(numUsers => {
+      cy.get('.anticon-plus').click();
+      cy.get("#NewUserEmail").type("random.mail@google.com");
+      cy.get("#NewUserPassword").type("random");
+      cy.get("#NewUserConfirmPassword").type("random");
+      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get(".User").its("length").should("equal", numUsers + 1);
+    });
+  });
+});
 
 context('Manage tasks Administrator', () => {
   beforeEach(() => {

@@ -227,7 +227,7 @@ export default class Users extends React.Component{
                                     this.state.users.map(user =>
 
                                         <Col  span={8} key={'Col'+user._id.$oid} >
-                                            <Card bordered={true} style={{width: 300, marginBottom: '2%'}} >
+                                            <Card bordered={true} style={{width: 300, marginBottom: '2%'}} className={"User"}>
                                                 <Icon type="edit" style={{
                                                     float: "left",
                                                     fontSize: "20px",
