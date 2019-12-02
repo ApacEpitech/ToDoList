@@ -26,7 +26,6 @@ context('Connect', () => {
   });
 });
 
-// TODO CREATE USER random.mail@google.com random
 context('Manage users Administrator', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/login');
