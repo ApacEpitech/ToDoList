@@ -24,7 +24,7 @@ class Login extends React.Component{
                         const user = res.data;
                         if (user.status === undefined) {
                             if (user.banned) {
-                                alert("You are BANNNEDDDD :)");
+                                alert("You are banned!");
                             }
                             else if (user.administrator) {
                                 Cookies.set('id', user._id.$oid);
