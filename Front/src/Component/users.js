@@ -238,7 +238,7 @@ export default class Users extends React.Component{
                                                 <Icon type="user-delete"
                                                       style={{float: "right", fontSize: "20px", cursor: "pointer"}} id={user._id.$oid} onClick={this.onDeleteUser}/>
                                                 <br/>
-                                                <h3>{user.email}</h3>
+                                                <h3 className={"userEmail"}>{user.email}</h3>
                                                 <Checkbox onChange={this.onChangeStateBan} id={"Done"}
                                                           style={{float: "right"}} checked={user.banned} id={user._id.$oid}>Ban</Checkbox>
                                             </Card>

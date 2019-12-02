@@ -48,6 +48,34 @@ context('Manage users Administrator', () => {
       cy.get(".User").its("length").should("equal", numUsers + 1);
     });
   });
+
+  it('.updates user', () => {
+    cy.get(".User").its("length").then(numUsers => {
+      cy.get('.userEmail').contains("random.mail@google.com").parent().get('.anticon-edit').click();
+      cy.get("#EditUserEmail").type("random2.mail@google.com");
+      cy.get("#EditUserPassword").type("random");
+      cy.get("#EditUserConfirmPassword").type("random");
+      cy.get("button").get("span").contains("Edit").click({force:true}).wait(200);
+      cy.get(".User").its("length").should("equal", numUsers);
+      cy.get('.userEmail').contains("random2.mail@google.com").its('length').should('gte', 1);
+    });
+  });
+
+  it('.delete user', () => {
+    cy.get(".User").its("length").then(numUsers => {
+      cy.get('.userEmail').contains("random2.mail@google.com").parent().get('.anticon-user-delete').click();
+      cy.get(".User").its("length").should("equal", numUsers - 1);
+    });
+  });
+
+  it('.ban user', () => {
+    cy.get(".User").its("length").then(numUsers => {
+      cy.get('.userEmail').contains("random2.mail@google.com").parent().get('.ant-checkbox-input').click();
+      cy.get(".User").its("length").should("equal", numUsers);
+      cy.get('.userEmail').contains("random2.mail@google.com").parent()
+          .get('.ant-checkbox-input').its('value').should('eq', true);
+    });
+  });
 });
 
 context('Manage tasks Administrator', () => {
