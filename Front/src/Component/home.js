@@ -281,7 +281,7 @@ export default class Home extends React.Component{
                             {
                                 this.state.tasks.map(task =>
                                     <Col  span={8} >
-                                        <Card bordered={true} style={{width: 300, marginBottom: '2%'}} title={task.title}  extra={<Icon type="close" style={{float: "right", fontSize: "20px", cursor: "pointer"}} onClick={this.onDeleteTask} id={task._id.$oid}/> }>
+                                        <Card bordered={true} style={{width: 300, marginBottom: '2%'}} title={task.title}  extra={<Icon type="close" style={{float: "right", fontSize: "20px", cursor: "pointer"}} className={"Task"} onClick={this.onDeleteTask} id={task._id.$oid}/> }>
                                             <br/>
                                             <p>{task.content}</p>
                                             <Icon type="edit" style={{float: "left", fontSize: "20px", cursor: "pointer"}} onClick={this.showModalEditTaskModal} id={task._id.$oid}/>
@@ -300,7 +300,7 @@ export default class Home extends React.Component{
                         onOk={this.handleOkNewTaskModal}
                         onCancel={this.handleCancelNewTaskModal}
                         okText={'Create'}>
-                        <Form >
+                        <Form id={"createTask"}>
                             <Form.Item>
                                 <Input
                                     prefix={<Icon type="project" style={{ color: 'rgba(0,0,0,.25)' }} />}

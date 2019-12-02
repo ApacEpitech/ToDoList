@@ -34,7 +34,7 @@ context('Manage users Administrator', () => {
         .type('admin@admin.com');
     cy.get('#normal_login_password')
         .type('admin');
-    cy.contains('Log in').click();
+    cy.contains('Log in').click().wait(200);
   });
 
   it('.creates user', () => {
@@ -44,7 +44,7 @@ context('Manage users Administrator', () => {
       cy.get("#NewUserEmail").type("random.mail@google.com");
       cy.get("#NewUserPassword").type("random");
       cy.get("#NewUserConfirmPassword").type("random");
-      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get("button").get("span").contains("Create").click({force:true}).wait(200);
       cy.get(".User").its("length").should("equal", numUsers + 1);
     });
   });
@@ -67,7 +67,7 @@ context('Manage tasks Administrator', () => {
       cy.get("#NewTitleTask").type("This is a task");
       cy.get(".ant-select-selection").click();
       cy.contains("admin").click();
-      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get("button").get("span").contains("Create").click({force:true}).wait(200);
       cy.get(".Task").its("length").should("equal", numTasks + 1);
     });
   });
@@ -79,7 +79,7 @@ context('Manage tasks Administrator', () => {
       cy.get("#NewTitleTask").type("This is a task");
       cy.get(".ant-select-selection").click();
       cy.contains("random").click();
-      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get("button").get("span").contains("Create").click({force:true}).wait(200);
       cy.get(".Task").its("length").should("equal", numTasks + 1);
     });
   });
@@ -107,7 +107,6 @@ context('Manage tasks User', () => {
       cy.get('.anticon-plus').click();
       cy.get('#createTask').should("be.visible");
       cy.get("#NewTitleTask").type("This is a task");
-      cy.get(".ant-select-selection").click();
       cy.get("button").get("span").contains("Create").click({force:true});
       cy.get(".Task").its("length").should("equal", numTasks + 1);
     });
