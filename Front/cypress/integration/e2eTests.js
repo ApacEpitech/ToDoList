@@ -135,7 +135,7 @@ context('Manage tasks User', () => {
       cy.get('.anticon-plus').click();
       cy.get('#createTask').should("be.visible");
       cy.get("#NewTitleTask").type("This is a task");
-      cy.get("button").get("span").contains("Create").click({force:true});
+      cy.get("button").get("span").contains("Create").click({force:true}).wait(200);
       cy.get(".Task").its("length").should("equal", numTasks + 1);
     });
   });
