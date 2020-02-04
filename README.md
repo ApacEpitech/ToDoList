@@ -23,7 +23,7 @@ Install required packages ```npm install```
 Start tests ```npm test```  
 
 ###E2E testing
-With online servers, go in "/Back" folder  
-Required dependencies such as Cypress have been installed when starting flask server 
+With online servers, go in "/Front" folder  
+Required dependencies such as Cypress have been installed when installing front dependencies 
 Open cypress ```$(npm bin)/cypress open```  
 To start cypress automated test, click on "e2eTests.js"

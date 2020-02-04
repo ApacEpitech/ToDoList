@@ -10,6 +10,9 @@ def add_user():
     _json = request.json
     _email = _json['mail']
     _password = _json['password']
+    user_found = mongo.db.user.find_one({'email': _email})
+    if user_found:
+        return unauthorized()
     # validate the received values
     if _email and _password:
         # do not save password as a plain text
